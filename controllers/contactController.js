@@ -18,11 +18,13 @@ const getContact = async (req, res) => {
 const createContact = async (req, res) => {
   try {
     const { name, email, phone } = req.body;
-    if (!name || !email || !phone) {
+    const {id}=req.user;
+    if (!name || !email || !phone || !id) {
       res.status(400);
       throw new Error("All fields are required");
     }
     const contact = await Contact.create({
+      userId:id,
       name,
       email,
       phone,
